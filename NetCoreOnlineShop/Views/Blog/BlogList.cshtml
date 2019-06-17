@@ -1,0 +1,44 @@
+﻿@model NetcoreOnlineShop.Utilities.Dtos.PageResult<BlogViewModel>
+@{
+    ViewData["Title"] = "Blog List";
+    ViewData["Keyword"] = "All blog posts";
+    ViewData["Description"] = "All blogs";
+}
+
+<!-- Main Container -->
+<section class="blog_post">
+    <div class="container">
+        <!-- Center colunm-->
+        <div class="blog-wrapper">
+            <div class="page-title">
+                <h2>Blog post</h2>
+            </div>
+            <ul class="blog-posts">
+                @foreach (var blog in Model.Results)
+                {
+                    <li class="post-item col-md-4" title="@blog.Name">
+                        <div class="blog-box">
+                            <a href="/blog-@blog.SeoAlias-@(blog.Id).html">
+                                <img class="primary-img" src="@blog.Thumbnail" alt="@blog.Name">
+                            </a>
+                            <div class="blog-btm-desc">
+                                <div class="blog-top-desc">
+                                    <div class="blog-date">@blog.CreatedDate.ToString("dd MMM yyyy")</div>
+                                    <h4><a href="/blog-@blog.SeoAlias-@(blog.Id).html">@blog.Name.Substring(0, 20)</a></h4>
+                                    <div class="jtv-entry-meta"> <i class="fa fa-user-o"></i> <strong>Admin</strong></div>
+                                </div>
+                                <p>@blog.Description.Substring(0, 180)</p>
+                                <a class="read-more" href="/blog-@blog.SeoAlias-@(blog.Id).html"> Read More</a>
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+            <div class="sortPagiBar">
+              @await Component.InvokeAsync("Pager",Model)
+            </div>
+        </div>
+        <!-- ./ Center colunm -->
+    </div>
+</section>
+<partial name="_ServicePartial">

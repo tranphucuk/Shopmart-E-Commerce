@@ -1,0 +1,81 @@
+2019-04-18T01:55:05.2730307+01:00 0HLM3J1JRP6DS:00000009 [WRN] The LINQ expression '"join Int32 c in __p_0 on [x].CategoryId equals [c]"' could not be translated and will be evaluated locally. (011792c6)
+2019-04-18T01:55:05.3023293+01:00 0HLM3J1JRP6DS:00000009 [WRN] The LINQ expression '"join Int32 c in __p_0 on [x].CategoryId equals [c]"' could not be translated and will be evaluated locally. (011792c6)
+2019-04-18T01:55:05.3236528+01:00 0HLM3J1JRP6DS:00000009 [WRN] The LINQ expression '"Distinct()"' could not be translated and will be evaluated locally. (011792c6)
+2019-04-18T01:55:05.3633349+01:00 0HLM3J1JRP6DS:00000009 [WRN] The LINQ expression '"join Int32 c in __p_0 on [x].CategoryId equals [c]"' could not be translated and will be evaluated locally. (011792c6)
+2019-04-18T01:55:05.3817016+01:00 0HLM3J1JRP6DS:00000009 [WRN] The LINQ expression '"Distinct()"' could not be translated and will be evaluated locally. (011792c6)
+2019-04-18T01:55:05.3970113+01:00 0HLM3J1JRP6DS:00000009 [WRN] The LINQ expression '"join AnonymousObject _x in {from Product x in value(Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1[NetcoreOnlineShop.Data.Entities.Product]) join Int32 c in __p_0 on [x].CategoryId equals [c] select new AnonymousObject(new [] {Convert(EF.Property(?[x]?, \"Id\"), Object)}) => Distinct()} on Property([x.ProductImages], \"ProductId\") equals Convert([_x].GetValue(0), Nullable`1)"' could not be translated and will be evaluated locally. (011792c6)
+2019-04-18T01:55:05.4062758+01:00 0HLM3J1JRP6DS:00000009 [WRN] The LINQ expression '"orderby [_x].GetValue(0) asc"' could not be translated and will be evaluated locally. (011792c6)
+2019-04-18T01:59:05.8853653+01:00 0HLM3J1JRP6DV:00000004 [WRN] Query: '"(from Bill x in DbSet<Bill> where __fromDate_0 < [x].CreatedDate && [x].CreatedDate < __toDate_1 sel..."' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results. (32148ccc)
+2019-04-18T02:20:32.0521245+01:00 0HLM3JG2RN6MP:00000006 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+System.Data.SqlClient.SqlException (0x80131904): Maximum stored procedure, function, trigger, or view nesting level exceeded (limit 32).
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at System.Data.SqlClient.SqlDataReader.TryHasMoreResults(Boolean& moreResults)
+   at System.Data.SqlClient.SqlDataReader.TryNextResult(Boolean& more)
+   at System.Data.SqlClient.SqlDataReader.<>c__DisplayClass187_0.<NextResultAsync>b__1(Task t)
+   at System.Data.SqlClient.SqlDataReader.InvokeRetryable[T](Func`2 moreFunc, TaskCompletionSource`1 source, IDisposable objectToDispose)
+--- End of stack trace from previous location where exception was thrown ---
+   at Dapper.SqlMapper.QueryAsync[T](IDbConnection cnn, Type effectiveType, CommandDefinition command) in C:\projects\dapper\Dapper\SqlMapper.Async.cs:line 449
+   at NetcoreOnlineShop.Application.Dapper.Implementations.ReportService.GetReportsAsync(DateTime fromDate, DateTime toDate) in D:\NetCoreShop_Github\NetcoreOnlineShop.Application.Dapper\Implementations\ReportService.cs:line 36
+   at NetCoreOnlineShop.Areas.Admin.Controllers.HomeController.GetRevenue(DateTime fromDate, DateTime toDate) in D:\NetCoreShop_Github\NetCoreOnlineShop\Areas\Admin\Controllers\HomeController.cs:line 25
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.MigrationsEndPointMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.DatabaseErrorPageMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.DatabaseErrorPageMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ClientConnectionId:d2681423-c8c5-489a-b9fc-a3af8796f0ea
+Error Number:217,State:1,Class:16
+2019-04-18T12:46:07.9444505+01:00 0HLM3UDETPLSI:00000004 [WRN] Query: '"(from Bill x in DbSet<Bill> where __fromDate_0 < [x].CreatedDate && [x].CreatedDate < __toDate_1 sel..."' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results. (32148ccc)
+2019-04-18T19:58:06.9219532+01:00 0HLM45V1EV7SN:00000002 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+System.Data.SqlClient.SqlException (0x80131904): Could not find stored procedure 'GetTotalSession'.
+   at System.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__122_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot)
+--- End of stack trace from previous location where exception was thrown ---
+   at Dapper.SqlMapper.QueryAsync[T](IDbConnection cnn, Type effectiveType, CommandDefinition command) in C:\projects\dapper\Dapper\SqlMapper.Async.cs:line 419
+   at NetcoreOnlineShop.Application.Dapper.Implementations.ReportService.GetReportsAsync(DateTime fromDate, DateTime toDate) in D:\NetCoreShop_Github\NetcoreOnlineShop.Application.Dapper\Implementations\ReportService.cs:line 39
+   at NetCoreOnlineShop.Areas.Admin.Controllers.HomeController.GetRevenue(DateTime fromDate, DateTime toDate) in D:\NetCoreShop_Github\NetCoreOnlineShop\Areas\Admin\Controllers\HomeController.cs:line 25
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.MigrationsEndPointMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.DatabaseErrorPageMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.DatabaseErrorPageMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ClientConnectionId:64d2f087-4cdd-43f8-8140-fa6524f0bcb3
+Error Number:2812,State:62,Class:16

@@ -1,0 +1,81 @@
+﻿@model NetCoreOnlineShop.Models.Announcements.UserAnnouncement
+@using Microsoft.AspNetCore.Http.Extensions
+@using NetCoreOnlineShop.Extensions
+@using NetcoreOnlineShop.Utilities.Constants
+@{
+    ViewData["Keyword"] = Model.Announcement.Title;
+    ViewData["Description"] = Model.Announcement.Title;
+    ViewData["Title"] = Model.Announcement.Title;
+
+    var listLinks = CommonConstants.listLinks;
+}
+
+@section Styles{
+    <link href="~/client-side/css/custom/client-side.min.css" rel="stylesheet" />
+}
+<!-- Breadcrumbs -->
+
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul>
+                    <li class="home"> <a title="Go to Home Page" href="/">Home</a><span>&raquo;</span></li>
+                    <li><strong>@Model.Announcement.Title</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumbs End -->
+<!-- Main Container -->
+<section class="main-container col2-right-layout">
+    <div class="main container">
+        <div class="row">
+            <div class="col-main col-sm-9 col-xs-12">
+                <div class="my-account">
+
+                    <div class="welcome-msg">
+                        <span>Dear @User.GetSpecificClaim("FullName"),</span>
+                    </div><br /><br />
+                    <div class="title-buttons" style="text-align:center"><strong>@Model.Announcement.Title</strong></div><br />
+                    <div>
+                        @Html.Raw(Model.Announcement.Content)
+                        <span class="pull-right" style="font-style:italic">@Model.DateSent.ToString("dddd, dd MMMM yyyy")</span>
+                    </div>
+                </div>
+            </div>
+            <aside class="right sidebar col-sm-3 col-xs-12">
+                <div class="sidebar-account block">
+                    <div class="sidebar-bar-title">
+                        <h3>My Account</h3>
+                    </div>
+                    <div class="block-content">
+                        @{
+                            var url = @Context.Request.GetDisplayUrl();
+                        }
+                        <ul>
+                            @foreach (var item in listLinks)
+                            {
+                                if (url.Contains(item.Url))
+                                {
+                                    <li class="current"><a href="@item.Url">@item.Name</a></li>
+                                }
+                                else if (listLinks.Last() == item)
+                                {
+                                    <li class="last"><a href="@item.Url">@item.Name</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="@item.Url">@item.Name</a></li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+                @await Component.InvokeAsync("RightSideBar")
+            </aside>
+        </div>
+    </div>
+</section>
+<partial name="_ServicePartial">

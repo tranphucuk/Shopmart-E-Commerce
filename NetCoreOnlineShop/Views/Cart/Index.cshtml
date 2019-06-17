@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewData["Title"] = "My cart";
+    ViewData["Keyword"] = "My cart";
+    ViewData["SeoDescription"] = "My cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts{
+    <script src="~/client-side/js/controller/cart/cart.min.js"></script>
+}
+<!-- Main Container -->
+<section class="main-container col1-layout">
+    <div class="main container">
+        <div class="col-main">
+            <div class="cart">
+                <div class="page-content page-order">
+                    <div class="page-title">
+                        <h2>Shopping Cart</h2>
+                    </div>
+                    <div class="order-detail-content">
+                        <div class="table-responsive">
+                            <table class="table table-bordered cart_summary">
+                                <thead>
+                                    <tr>
+                                        <th width="15%" class="cart_product">Product</th>
+                                        <th>Description</th>
+                                        <th class="align-text-table">Unit price</th>
+                                        <th class="align-text-table">Qty</th>
+                                        <th class="align-text-table">Total</th>
+                                        <th class="action"><i class="fa fa-trash-o"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbl-cart-content"></tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="2"><strong></strong></td>
+                                        <td class="align-text-table" colspan="1"><strong>Total</strong></td>
+                                        <td colspan="1"><strong></strong></td>
+                                        <td class="align-text-table" colspan="1"><strong>$</strong><strong id="total-bill"></strong></td>
+                                        <td colspan="1"><strong></strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="cart_navigation">
+                            <a class="continue-btn" href="/"><i class="fa fa-arrow-left"> </i>&nbsp; Continue shopping</a>
+                            <a class="checkout-btn" href="/checkout.html"><i class="fa fa-check"></i> Proceed to checkout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<partial name="_ServicePartial">
+    <script id="tbl-cart-template" type="x-tmpl-mustache">
+        <tr data-id="{{Id}}">
+            <td class="cart_product"><a href="{{{Url}}}"><img src="{{{Path}}}" alt="{{Name}}"></a></td>
+            <td class="cart_description">
+                <p class="product-name"><a href="{{{Url}}}">{{Name}} </a></p>
+                <small>Color: {{{Color}}}</small>
+                <small>Size: &nbsp;&nbsp;{{{Size}}}</small>
+            </td>
+            <td class="price">$<span class="single-price">{{Price}}</span></td>
+            <td class="qty">
+                <button class="btn-sign-quantity btn-minus-quantity">-</button>
+                <input class=" input-sm txt-quantity" readonly type="text" min="1" value="{{Value}}">
+                <button class="btn-sign-quantity btn-plus-quantity">+</button>
+            </td>
+            <td class="price">$<span class="total-price">{{TotalPrice}}</span></td>
+            <td class="action"><a href="#" id="remove-cart-item"><i class="icon-close"></i></a></td>
+        </tr>
+    </script>

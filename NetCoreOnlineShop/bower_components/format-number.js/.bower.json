@@ -1,0 +1,26 @@
+{
+  "name": "format-number.js",
+  "version": "0.0.2",
+  "main": "format-number.js",
+  "maintainers": [
+    "Sergey Todyshev <stodyshev@gmail.com>"
+  ],
+  "ignore": [
+    ".*",
+    "node_modules",
+    "test",
+    "Gruntfile.coffee",
+    "karma*.js",
+    "package.json"
+  ],
+  "homepage": "https://github.com/sergeyt/format-number.js",
+  "_release": "0.0.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.0.2",
+    "commit": "6309ec9e498a9de301a89bb43e745be5bb5e8ead"
+  },
+  "_source": "https://github.com/sergeyt/format-number.js.git",
+  "_target": "0.0.2",
+  "_originalSource": "format-number.js"
+}

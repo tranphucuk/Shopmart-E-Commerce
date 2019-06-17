@@ -1,0 +1,80 @@
+﻿@model int
+@using Microsoft.AspNetCore.Http.Extensions
+@using NetcoreOnlineShop.Utilities.Constants
+@{
+    ViewData["Keyword"] = "Open Ticket";
+    ViewData["Description"] = "Open Ticket";
+    ViewData["Title"] = "Open Ticket";
+
+    var listLinks = CommonConstants.listLinks;
+}
+
+<!-- Breadcrumbs -->
+
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul>
+                    <li class="home"> <a title="Go to Home Page" href="/">Home</a><span>&raquo;</span></li>
+                    <li><strong>Support Ticket</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumbs End -->
+<!-- Main Container -->
+<section class="main-container col2-right-layout">
+    <div class="main container">
+        <div class="row">
+            <div class="col-main col-sm-9 col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12" id="contact_form_map">
+                        <div class="page-title">
+                            <h2>Ticket sent!</h2>
+                        </div>
+                        <p>
+                            We have received your ticket about bill number <strong>#@Model</strong>, we aim to reponse your ticket issue within 48 hours via
+                            your e-mail address. Thank you!<br /><br />
+
+                            Regards<br />
+                            Support team.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <aside class="right sidebar col-sm-3 col-xs-12">
+                <div class="sidebar-account block">
+                    <div class="sidebar-bar-title">
+                        <h3>My Account</h3>
+                    </div>
+                    <div class="block-content">
+                        @{
+                            var url = @Context.Request.GetDisplayUrl();
+                        }
+                        <ul>
+                            @foreach (var item in listLinks)
+                            {
+                                if (url.Contains(item.Url))
+                                {
+                                    <li class="current"><a href="@item.Url">@item.Name</a></li>
+                                }
+                                else if (listLinks.Last() == item)
+                                {
+                                    <li class="last"><a href="@item.Url">@item.Name</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="@item.Url">@item.Name</a></li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+                @await Component.InvokeAsync("RightSideBar")
+            </aside>
+        </div>
+    </div>
+</section>
+<partial name="_ServicePartial">

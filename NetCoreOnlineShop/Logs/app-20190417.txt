@@ -1,0 +1,4 @@
+2019-04-17T00:08:57.0645053+01:00 0HLM2O0CIR8MK:0000000C [WRN] Query: '"(from Bill x in DbSet<Bill> where (int)[x].BillStatus == (int)(BillStatus)__option_0 select [x]).Ski..."' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results. (32148ccc)
+2019-04-17T00:16:32.2038908+01:00 0HLM2O5T81T0U:00000009 [WRN] The LINQ expression '"Contains(Property([x], \"Id\"))"' could not be translated and will be evaluated locally. (011792c6)
+2019-04-17T00:16:32.2117752+01:00 0HLM2O5T81T0U:00000009 [WRN] The LINQ expression '"where Not({from BillDetail <generated>_1 in __billDetails_0 select Property([<generated>_1], \"Id\") => Contains(Property([x], \"Id\"))})"' could not be translated and will be evaluated locally. (011792c6)
+2019-04-17T00:16:32.2130067+01:00 0HLM2O5T81T0U:00000009 [WRN] The LINQ expression '"Contains(Property([x], \"Id\"))"' could not be translated and will be evaluated locally. (011792c6)

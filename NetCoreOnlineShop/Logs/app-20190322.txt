@@ -1,0 +1,19 @@
+2019-03-22T15:38:27.3831665+00:00 0HLLERFLUD7IK:00000003 [WRN] Query: '"(from AppRole x in DbSet<AppRole> select new AppRoleViewModel{ { 
+    Id = [x].Id, , 
+    Name = [..."' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results. (32148ccc)
+2019-03-22T15:38:27.4792510+00:00 0HLLERFLUD7IK:00000003 [WRN] Query: '"(from AppRole x in DbSet<AppRole> select new AppRoleViewModel{ { 
+    Id = [x].Id, , 
+    Name = [..."' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results. (32148ccc)
+2019-03-22T17:56:14.5901457+00:00 0HLLETUHCNHU5:00000002 [WRN] Query: '"(from Function dtoFunction in DbSet<Function> where bool string [dtoFunction].Id.ToLower().Contains(..."' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results. (32148ccc)
+2019-03-22T21:58:43.7684190+00:00 0HLLF20O3JKQ2:00000006 [WRN] Query: '"(from AppRole x in DbSet<AppRole> select new AppRoleViewModel{ { 
+    Id = [x].Id, , 
+    Name = [..."' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results. (32148ccc)
+2019-03-22T21:58:43.7990372+00:00 0HLLF20O3JKQ2:00000006 [WRN] Query: '"(from AppRole x in DbSet<AppRole> select new AppRoleViewModel{ { 
+    Id = [x].Id, , 
+    Name = [..."' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results. (32148ccc)
+2019-03-22T21:59:19.9344577+00:00 0HLLF26GVC6KJ:00000002 [WRN] Query: '"(from AppRole x in DbSet<AppRole> select new AppRoleViewModel{ { 
+    Id = [x].Id, , 
+    Name = [..."' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results. (32148ccc)
+2019-03-22T21:59:19.9955479+00:00 0HLLF26GVC6KJ:00000002 [WRN] Query: '"(from AppRole x in DbSet<AppRole> select new AppRoleViewModel{ { 
+    Id = [x].Id, , 
+    Name = [..."' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results. (32148ccc)

@@ -1,0 +1,123 @@
+﻿@model List<ProductCategoryViewModel>
+@{
+    var mainCategories = Model.Where(x => x.ParentId == null).Take(10);
+}
+<div class="navleft-container">
+    <div class="mega-menu-title">
+        <h3><span>All Categories</span></h3>
+    </div>
+    <!-- Shop by category -->
+    <div class="mega-menu-category">
+        <ul class="nav">
+            @foreach (var parent in mainCategories)
+            {
+                var child1st = Model.Where(x => x.ParentId == parent.Id);
+                if (child1st.Count() == 0)
+                {
+                    <li class="nosub"><a href="/category-@parent.SeoAlias-@(parent.Id).html">@parent.Name</a></li>
+                }
+                else if (child1st.Count() > 12)
+                {
+                    <li>
+                        <a href="/category-@parent.SeoAlias-@(parent.Id).html">@parent.Name </a>
+                        @{
+                            var childArr = child1st.Take(16).ToArray();
+                            <div class="wrap-popup">
+                                <div class="popup">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-6 has-sep">
+                                            <ul class="nav">
+                                                @for (int i = 0; i < 8; i++)
+                                                {
+                                                    <li>
+                                                        <a href="/category-@childArr[i].SeoAlias-@(childArr[i].Id).html">
+                                                            <span> @childArr[i].Name </span>
+                                                        </a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-4 col-sm-6 has-sep">
+                                            <ul class="nav">
+                                                @for (int i = 8; i < childArr.Length; i++)
+                                                {
+                                                    <li>
+                                                        <a href="/category-@childArr[i].SeoAlias-@(childArr[i].Id).html">
+                                                            <span> @childArr[i].Name </span>
+                                                        </a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-4 has-sep hidden-sm">
+                                            <div class="custom-menu-right">
+                                                <div class="box-banner menu-banner">
+                                                    <div class="add-right"><a href="/category-@parent.SeoAlias-@(parent.Id).html"><img src="~/client-side/images/cate.jpg" alt="@parent.Image"></a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </li>
+                }
+                else if (child1st.Count() > 8 && child1st.Count() <= 12)
+                {
+                    <li>
+                        <a href="/category-@parent.SeoAlias-@(parent.Id).html">@parent.Name</a>
+                        @{
+                            var childArr = child1st.Take(12).ToArray();
+                            <div class="wrap-popup column3">
+                                <div class="popup">
+                                    <div class="row">
+                                        <div class="col-sm-6 has-sep">
+                                            <ul class="nav">
+                                                @for (int i = 0; i < 6; i++)
+                                                {
+                                                    <li>
+                                                        <a href="/category-@childArr[i].SeoAlias-@(childArr[i].Id).html">
+                                                            <span> @childArr[i].Name </span>
+                                                        </a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                        <div class="col-sm-6 has-sep">
+                                            <ul class="nav">
+                                                @for (int i = 6; i < childArr.Length; i++)
+                                                {
+                                                    <li>
+                                                        <a href="/category-@childArr[i].SeoAlias-@(childArr[i].Id).html">
+                                                            <span> @childArr[i].Name </span>
+                                                        </a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </li>
+                }
+                else if (child1st.Count() <= 8)
+                {
+                    <li>
+                        <a href="/category-@parent.SeoAlias-@(parent.Id).html">@parent.Name </a>
+                        <div class="wrap-popup column1">
+                            <div class="popup">
+                                <ul class="nav">
+                                    @foreach (var child in child1st)
+                                    {
+                                        <li><a href="/category-@child.SeoAlias-@(child.Id).html"><span>@child.Name</span></a></li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</div>

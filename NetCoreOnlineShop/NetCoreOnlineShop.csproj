@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>aspnet-NetCoreOnlineShop-FFC5FABE-1D8D-4436-8D49-BD2115008593</UserSecretsId>
+    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="bundleconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="EPPlus.Core" Version="1.5.4" />
+    <PackageReference Include="Imgur.API" Version="4.0.1" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.1.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.5" PrivateAssets="All" />
+    <PackageReference Include="PaulMiami.AspNetCore.Mvc.Recaptcha" Version="1.2.1" />
+    <PackageReference Include="Serilog.Extensions.Logging.File" Version="1.1.0" />
+    <PackageReference Include="System.IO.FileSystem" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NetcoreOnlineShop.Application.Dapper\NetcoreOnlineShop.Application.Dapper.csproj" />
+    <ProjectReference Include="..\NetcoreOnlineShop.Application\NetcoreOnlineShop.Application.csproj" />
+    <ProjectReference Include="..\NetcoreOnlineShop.Data.EF\NetcoreOnlineShop.Data.EF.csproj" />
+    <ProjectReference Include="..\NetcoreOnlineShop.Data\NetcoreOnlineShop.Data.csproj" />
+    <ProjectReference Include="..\NetcoreOnlineShop.Infrastructure\NetcoreOnlineShop.Infrastructure.csproj" />
+    <ProjectReference Include="..\NetcoreOnlineShop.Utilities\NetcoreOnlineShop.Utilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\admin-side\images\avatar\" />
+    <Folder Include="wwwroot\admin-side\images\banner\" />
+    <Folder Include="wwwroot\client-side\images\blog\" />
+    <Folder Include="wwwroot\templates\Wishlist\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bundleconfig.json" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,104 @@
+﻿@model LoginViewModel
+@inject SignInManager<AppUser> SignInManager
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var returnurl = (ViewData["ReturnUrl"]).ToString();
+}
+
+<!-- Breadcrumbs -->
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul>
+                    <li class="home"> <a title="Go to Home Page" href="/">Home</a><span>&raquo;</span></li>
+                    <li><strong>My Account</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumbs End -->
+<!-- Main Container -->
+<section class="main-container col1-layout">
+    <div class="main container">
+        <div class="page-content">
+            <div class="account-login">
+                <form method="post" asp-route-returnurl="@returnurl">
+                    @Html.AntiForgeryToken()
+                    <div class="box-authentication">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <h4>Login</h4>
+                        <p class="before-login-text">Welcome back! Sign in to your account</p>
+
+                        <label asp-for="Username">Username<span class="required">*</span></label>
+                        <input asp-for="Username" type="text" class="form-control">
+
+                        <label asp-for="Password">Password<span class="required">*</span></label>
+                        <input asp-for="Password" type="password" class="form-control">
+                        <p class="forgot-pass"><a href="/forgot-password.html">Lost your password?</a></p>
+
+                        <button type="submit" class="button"><i class="icon-lock icons"></i>&nbsp; <span>Login</span></button>
+                        <label class="inline" asp-for="RememberMe">
+                            <input asp-for="RememberMe" />
+                            @Html.DisplayNameFor(m => m.RememberMe)
+                        </label>
+                    </div>
+                </form>
+                <div class="box-authentication">
+                    <h4>Register</h4>
+                    <p>Create your very own account</p>
+                    <form asp-area="" asp-controller="Account" asp-action="Register" method="get">
+                        <button type="submit" class="button">
+                            <i class="icon-user icons"></i>&nbsp; <span>Register</span>
+                        </button>
+                    </form>
+                    <div class="register-benefits">
+                        <h5>Sign up today and you will be able to :</h5>
+                        <ul>
+                            <li>Speed your way through checkout</li>
+                            <li>Track your orders easily</li>
+                            <li>Keep a record of all your purchases</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div>
+                    <section class="box-authentication">
+                        <h6 class="register-benefits">Use another service to log in.</h6>
+                        @{
+                            var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+                            if (loginProviders.Count == 0)
+                            {
+                                <div>
+                                    <p>
+                                        There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                                        for details on setting up this ASP.NET application to support logging in via external services.
+                                    </p>
+                                </div>
+                            }
+                            else
+                            {
+                                <form asp-route-returnurl="@returnurl" asp-controller="Account" asp-action="ExternalLogin" method="post" class="form-horizontal">
+                                    <div>
+                                        <p>
+                                            @foreach (var provider in loginProviders)
+                                            {
+                                                <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                            }
+                                        </p>
+                                    </div>
+                                </form>
+                            }
+                        }
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Main Container End -->
+<!-- service section -->
+@await Component.InvokeAsync("Service")
+<!--End service section -->

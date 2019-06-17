@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewData["Title"] = "Confirmed email";
+}
+<!-- Breadcrumbs -->
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul>
+                    <li class="home"> <a title="Go to Home Page" href="/">Home</a><span>&raquo;</span></li>
+                    <li><strong>Register</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumbs End -->
+<!-- Main Container -->
+<section class="main-container col1-layout">
+    <div>
+        <div class="main container">
+            <div class="page-content">
+                <div class="account-login">
+                    <div class="col-md-3 col-sm-2"></div>
+                    <div class="col-md-6 col-sm-8">
+                        <div class="single-input p-bottom50 clearfix">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h3 style="color:green">Thank you!</h3>
+                                    <label>Your account has been confirmed successfully! Click <a href="/login.html"><strong><u>here</u></strong></a> to login.</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Main Container End -->
+@await Component.InvokeAsync("Service")

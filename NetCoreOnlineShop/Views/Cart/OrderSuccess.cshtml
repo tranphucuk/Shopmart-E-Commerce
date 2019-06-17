@@ -1,0 +1,144 @@
+﻿@model NetCoreOnlineShop.Models.ShopingCartViewModels.SuccessOrder
+@{
+    ViewData["Title"] = "Order success";
+    var bill = Model.Bill;
+    var billDetails = bill.BillDetails;
+    decimal totalCost = 0;
+    foreach (var item in billDetails)
+    {
+        totalCost += item.Quantity * item.Price;
+    }
+}
+<!-- Breadcrumbs -->
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul>
+                    <li class="home"> <a title="Go to Home Page" href="/">Home</a><span>&raquo;</span></li>
+                    <li><strong>Order Information</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumbs End -->
+<!-- Main Container -->
+<section class="main-container col2-right-layout">
+    <div class="main container">
+        <div class="row">
+            <div class="col-lg-9 col-md-9 col-xs-12 col-sm-12 sign-success">
+                <div class="col-sm-12 pull-left col-xs-12"><i class="fa fa-check check-mark"></i><span class="thank-you">THANK YOU!</span></div>
+                <div class="col-sm-12 pull-left col-xs-12">Thanks a bunch for your purchase. A confirmation email will be shortly sent to your email address.</div>
+            </div>
+        </div><br /><br />
+        <div class="row">
+            <div class="col-main col-sm-9 col-xs-12">
+                <div class="my-account">
+                    <div class="page-title">
+                        <h2>Order Information</h2>
+                    </div>
+                    <div class="orders-list table-responsive">
+                        <!--order info tables-->
+                        <table class="table table-bordered cart_summary table-striped">
+                            <tr>
+                                <td class="order-number">Order Number</td>
+                                <td data-title="Order Number">#@bill.Id</td>
+                            </tr>
+                            <tr>
+                                <td class="order-number">Order Date</td>
+                                <td data-title="Order Date">@bill.CreatedDate.ToString("dd MMM yyyy - hh: mm: ss tt")</td>
+                            </tr>
+                            <tr>
+                                <td class="order-number">Order Status</td>
+                                <td data-title="Order Status">Confirmed by shopper</td>
+                            </tr>
+                            <tr>
+                                <td class="order-number">Payment</td>
+                                <td data-title="Payment">@bill.PaymentMethod</td>
+                            </tr>
+                            <tr>
+                                <td class="order-number">Comment</td>
+                                <td data-title="Comment">@bill.CustomerMessage</td>
+                            </tr>
+                            <tr>
+                                <td class="order-number">Total</td>
+                                <td data-title="Total"><p>$@totalCost</p></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="orders-list table-responsive">
+                        <div class="page-title">
+                            <h2>Bill To</h2>
+                        </div>
+                        <div class="orders-list table-responsive">
+                            <!--order info tables-->
+                            <table class="table table-bordered cart_summary table-striped">
+                                <tr>
+                                    <td class="order-number">E-Mail</td>
+                                    <td data-title="Order Number">@bill.CustomerEmail</td>
+                                </tr>
+                                <tr>
+                                    <td class="order-number">Fullname</td>
+                                    <td data-title="Order Date">@bill.CustomerName</td>
+                                </tr>
+                                <tr>
+                                    <td class="order-number">Address</td>
+                                    <td data-title="Order Status">@bill.CustomerAddress</td>
+                                </tr>
+                                <tr>
+                                    <td class="order-number">Phone</td>
+                                    <td data-title="Payment">@bill.CustomerPhone</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <aside class="right sidebar col-sm-3 col-xs-12">
+                <div class="block special-product hidden-sm hidden-xs">
+                    <div class="sidebar-bar-title">
+                        <h3>New Arrivals</h3>
+                    </div>
+                    <div class="block-content">
+                        <ul>
+                            @foreach (var product in Model.NewArrivals)
+                            {
+                                <li class="item">
+                                    <div class="products-block-left">
+                                        <a href="/product-@product.SeoAlias-@(product.Id).html" title="@product.Name" class="product-image">
+                                            <img src="@product.Image" alt="@product.Name ">
+                                        </a>
+                                    </div>
+                                    <div class="products-block-right">
+                                        <p class="product-name">
+                                            <a href="/product-@product.SeoAlias-@(product.Id).html" title="@product.Name">
+                                                @product.Name
+                                            </a>
+                                        </p>
+                                        <span class="price">$@product.Price</span>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                        <a class="link-all" href="/new-arrival-products.html">All Products</a>
+                    </div>
+                </div>
+                <div class="block popular-tags-area hidden-sm hidden-xs">
+                    <div class="sidebar-bar-title">
+                        <h3>Popular Tags</h3>
+                    </div>
+                    <div class="tag">
+                        <ul>
+                            @foreach (var tag in Model.Tags)
+                            {
+                                <li><a href="products-by-tag-@(tag.Id).html">@tag.Name</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+<partial name="_ServicePartial">

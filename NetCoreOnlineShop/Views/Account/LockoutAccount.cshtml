@@ -1,0 +1,44 @@
+﻿@model DateTimeOffset
+@{
+    ViewData["Title"] = "Confirm email";
+    var endDate = Model.UtcDateTime.ToLongTimeString();
+}
+<!-- Breadcrumbs -->
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul>
+                    <li class="home"> <a title="Go to Home Page" href="/">Home</a><span>&raquo;</span></li>
+                    <li><strong>Register</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumbs End -->
+<!-- Main Container -->
+<section class="main-container col1-layout">
+    <div>
+        <div class="main container">
+            <div class="page-content">
+                <div class="account-login">
+                    <div class="col-md-3 col-sm-2"></div>
+                    <div class="col-md-6 col-sm-8">
+                        <div class="single-input p-bottom50 clearfix">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h4 style="color:red">Access is denied!</h4>
+                                    <label>This account has been temporary locked out, please try again after 30 minutes.</label>
+                                    <label>End locked out time: @endDate</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Main Container End -->
+@await Component.InvokeAsync("Service")

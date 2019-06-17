@@ -1,0 +1,84 @@
+﻿@model NetCoreOnlineShop.Models.IdentityViewModel.ExternalLoginViewModel
+@using PaulMiami.AspNetCore.Mvc.Recaptcha
+@{
+    ViewData["Title"] = ViewData["LoginProvider"] + " login";
+}
+
+<!-- Breadcrumbs -->
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul>
+                    <li class="home"> <a title="Go to Home Page" href="/">Home</a><span>&raquo;</span></li>
+                    <li><strong>@ViewData["LoginProvider"] Login</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="main-container col1-layout">
+    <div class="main container">
+        <div class="page-content">
+            <div class="account-login">
+                <div class="col-md-3 col-sm-2"></div>
+                <div class="col-md-6 col-sm-8">
+                    <p class="text-info">
+                        You've successfully authenticated with <strong>@ViewData["LoginProvider"]</strong>.
+                        Please enter your information and click the Register button to finish
+                        logging in.
+                    </p>
+                    <div class="single-input p-bottom50 clearfix">
+                        <form asp-action="ExternalLoginConfirmation" asp-controller="Account" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+                            @Html.AntiForgeryToken()
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="col-sm-6">
+                                <label asp-for="FullName"></label>
+                                <div class="input-text">
+                                    <input asp-for="FullName" name="FullName" value="@(Model.FullName)" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label asp-for="BirthDay"></label>
+                                <div class="input-text">
+                                    <input asp-for="BirthDay" type="date" name="BirthDay" value="@(Model.BirthDay)" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label asp-for="Address"></label>
+                                <div class="input-text">
+                                    <input asp-for="Address" name="Address" value="@(Model.Address)" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label asp-for="PhoneNumber"></label>
+                                <div class="input-text">
+                                    <input asp-for="PhoneNumber" name="PhoneNumber" value="@(Model.PhoneNumber)" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12">
+                                <br />
+                                <div>
+                                    <recaptcha type="RecaptchaType.Image" />
+                                    <span class="text-danger" id="recaptchaErrorMessage"></span>
+                                </div><br />
+                                <div class="submit-text">
+                                    <button type="submit" class="button"><i class="fa fa-user"></i>&nbsp; <span>Register</span></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@await Component.InvokeAsync("Service")
+@section Scripts {
+    <script src="~/lib/jquery-validation-unobtrusive/src/jquery.validate.unobtrusive.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+    <recaptcha-script validation-message-element-id="recaptchaErrorMessage" />
+}

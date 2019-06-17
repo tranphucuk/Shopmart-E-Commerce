@@ -1,0 +1,47 @@
+﻿
+<div class="modal fade bd-example-modal-lg" id="quick-view-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="padding:2px">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fa fa-window-close"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row quick-view">
+                    <div class="col-sm-12 col-md-6 col-xs-6 quick-view-img"></div>
+                    <div class="col-sm-12 col-md-6 col-xs-12 detail pull-left">
+                        <div class="product-details-area">
+                            <div class="product-name">
+                                <h1 class="quick-view-name"></h1>
+                            </div>
+                            <hr />
+                            <div class="price-box">
+                                <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" style="font-size: 22px" id="sale-price"></span> </p>
+                                <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" style="font-size: 22px" id="price-before"></span> </p>
+                                <span class="regular-price"><span class="price" style="font-size: 22px" id="regular-price"></span></span>
+                            </div>
+                            <hr />
+                            <div class="short-description">
+                                <p class="quick-view-description"></p>
+                            </div>
+                        </div>
+                        <div class="product-variation" style="border-bottom:none">
+                            <button class="button pro-add-to-cart see-product-details" title="See details" type="button"><span>See product details</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer hidden-xs hidden-sm">
+                <div class="row header-text">Customers also bought</div>
+                <ul style="margin:0;" id="sub-item-content"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="sub-items-template" type="x-tmpl-mustache">
+    <li class="sub-item-quick-view pull-left" data-id="{{Id}}" title="{{Name}}">
+        <img src="{{{Path}}}" alt="{{Name}}" />
+    </li>
+</script>
+

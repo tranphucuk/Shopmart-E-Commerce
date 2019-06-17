@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div style="color:forestgreen;font-family: Montserrat,sans-serif;font-size: 2.25rem;font-weight: 700;">THANK YOU!</div>
+    <div style="font-family: Akkurat-Regular,sans-serif;line-height: 1.4;">Thank you for your purchase. Your order will be delivered within 7 working days.</div>
+    <div style="font-family: Akkurat-Regular,sans-serif;line-height: 1.4;">The table below contains your order information</div>
+    <br />
+    <br />
+    <div style="font-family: Montserrat,sans-serif;font-size: 1rem;font-weight: 700;text-decoration:underline">Order Information</div>
+    <div style="text-align:center;">
+        <table style="width:60%" border="1" float="left" width="148" margin-right=" 4%">
+            <tr>
+                <td width="20%">Order Number</td>
+                <td>#{{OrderId}}</td>
+            </tr>
+            <tr>
+                <td width="20%">Order Date</td>
+                <td>{{OrderDate}}</td>
+            </tr>
+            <tr>
+                <td width="20%">Order Status</td>
+                <td>Confirmed by shopper</td>
+            </tr>
+            <tr>
+                <td width="20%">Payment</td>
+                <td>{{PaymentMethod}}</td>
+            </tr>
+            <tr>
+                <td width="20%">E-Mail</td>
+                <td>{{Email}}</td>
+            </tr>
+            <tr>
+                <td width="20%">Fullname</td>
+                <td>{{Fullname}}</td>
+            </tr>
+            <tr>
+                <td width="20%">Address</td>
+                <td>{{Address}}</td>
+            </tr>
+            <tr>
+                <td width="20%">Phone</td>
+                <td>{{Phone}}</td>
+            </tr>
+            <tr>
+                <td width="20%">Comment</td>
+                <td>{{Message}}</td>
+            </tr>
+            <tr>
+                <td width="20%">Total</td>
+                <td>${{TotalCost}}</td>
+            </tr>
+        </table>
+    </div>
+    <br />
+    <div style="font-weight:bold">
+        ***FREE SHIPPING. FREE RETURNS. ALL THE TIME. This offer is only available for Standard Shipping on Shop Mart. Please visit Shop Mart for details about their shipping and return policies.
+    </div>
+</body>
+</html>

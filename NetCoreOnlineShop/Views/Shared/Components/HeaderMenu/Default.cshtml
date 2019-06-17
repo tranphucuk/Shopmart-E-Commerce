@@ -1,0 +1,239 @@
+﻿@model HomeViewModel
+@{
+    var mainCategories = Model.ProductCategoryViewModels.Where(x => x.ParentId == null).Take(3);
+    var newArrivalProducts = Model.ProductViewModels.OrderByDescending(x => x.CreatedDate).Take(3);
+    var specialOffer = Model.ProductViewModels.OrderBy(x => x.Price).Take(3);
+    var bestSeller = Model.ProductViewModels.Where(x => x.HotFlag == Status.Active).Take(3);
+    var blogs = Model.BlogViewModels.OrderByDescending(x => x.CreatedDate).Take(5);
+}
+<div class="mtmegamenu">
+    <ul class="hidden-xs">
+        <li class="mt-root demo_custom_link_cms">
+            <div class="mt-root-item">
+                <a href="/">
+                    <div class="title title_font"><span class="title-text">Home</span></div>
+                </a>
+            </div>
+        </li>
+        <li class="mt-root">
+            <div class="mt-root-item">
+                <a href="#">
+                    <div class="title title_font"><span class="title-text">Categories</span></div>
+                </a>
+            </div>
+            <ul class="menu-items col-xs-12">
+                @foreach (var item in mainCategories)
+                {
+                    <li class="menu-item depth-1 menucol-1-3 ">
+                        <div class="title title_font"> <a href="/category-@item.SeoAlias-@(item.Id).html">@item.Name</a></div>
+                        <ul class="submenu">
+                            @{
+                                var subCategories = Model.ProductCategoryViewModels.Where(x => x.ParentId == item.Id).Take(8);
+                                foreach (var subItem in subCategories)
+                                {
+                                    <li class="menu-item">
+                                        <div class="title"> <a href="/category-@subItem.SeoAlias-@(subItem.Id).html">@subItem.Name</a></div>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </li>
+
+                }
+            </ul>
+        </li>
+        <li class="mt-root">
+            <div class="mt-root-item">
+                <a href="/new-arrival-products.html">
+                    <div class="title title_font"><span class="title-text">New Arrivals</span> </div>
+                </a>
+            </div>
+            <ul class="menu-items col-xs-12">
+                @foreach (var item in newArrivalProducts)
+                {
+                    var images = item.ProductImages.Take(2);
+                    if (images.Count() < 2)
+                    {
+                        continue;
+                    }
+                    <li class="menu-item depth-1 product menucol-1-3 withimage">
+                        <div class="product-item">
+                            <div class="item-inner">
+                                <div class="product-thumbnail">
+                                    <div class="icon-new-label new-right">New</div>
+                                    <div class="pr-img-area">
+                                        <a title="@item.SeoPageTitle" href="/product-@item.SeoAlias-@(item.Id).html">
+                                            <figure>
+                                                @{
+                                                    <img class="first-img" src="@images.First().Path" alt="@images.First().Caption">
+                                                    <img class="hover-img" src="@images.Last().Path" alt="@images.Last().Caption">
+                                                }
+                                            </figure>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="item-info">
+                                    <div class="info-inner">
+                                        <div class="item-title"> <a title="@item.SeoPageTitle" href="/product-@item.SeoAlias-@(item.Id).html">@item.Name</a> </div>
+                                        <div class="item-content">
+                                            <div class="item-price">
+                                                <div class="price-box">
+                                                    @{
+                                                        if (item.PromotionPrice.HasValue)
+                                                        {
+                                                            <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> $@item.PromotionPrice.Value </span> </p>
+                                                            <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> $@item.Price </span> </p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="regular-price"><span class="price"> $@item.Price </span></span>
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                }
+            </ul>
+        </li>
+        <li class="mt-root">
+            <div class="mt-root-item">
+                <a href="/special-offer-products.html">
+                    <div class="title title_font"><span class="title-text">SPECIAL OFFERS</span> </div>
+                </a>
+            </div>
+            <ul class="menu-items col-xs-12">
+                @foreach (var item in specialOffer)
+                {
+                    var images = item.ProductImages.Take(2);
+                    if (images.Count() < 2)
+                    {
+                        continue;
+                    }
+                    <li class="menu-item depth-1 product menucol-1-3 withimage">
+                        <div class="product-item">
+                            <div class="item-inner">
+                                <div class="product-thumbnail">
+                                    <div class="icon-sale-label sale-left">Sale</div>
+                                    <div class="pr-img-area">
+                                        <a title="@item.SeoPageTitle" href="/product-@item.SeoAlias-@(item.Id).html">
+                                            <figure>
+                                                @{
+                                                    <img class="first-img" src="@images.First().Path" alt="@images.First().Caption">
+                                                    <img class="hover-img" src="@images.Last().Path" alt="@images.Last().Caption">
+                                                }
+                                            </figure>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="item-info">
+                                    <div class="info-inner">
+                                        <div class="item-title"> <a title="@item.SeoPageTitle" href="/product-@item.SeoAlias-@(item.Id).html">@item.Name</a> </div>
+                                        <div class="item-content">
+                                            <div class="item-price">
+                                                <div class="price-box">
+                                                    @{
+                                                        if (item.PromotionPrice.HasValue)
+                                                        {
+                                                            <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> $@item.PromotionPrice.Value </span> </p>
+                                                            <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> $@item.Price </span> </p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="regular-price"><span class="price"> $@item.Price </span></span>
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                }
+            </ul>
+        </li>
+        <li class="mt-root">
+            <div class="mt-root-item">
+                <a href="/best-seller-products.html">
+                    <div class="title title_font"><span class="title-text">BEST SELLER</span> </div>
+                </a>
+            </div>
+            <ul class="menu-items col-xs-12">
+                @foreach (var item in bestSeller)
+                {
+                    var images = item.ProductImages.Take(2);
+                    if (images.Count() < 2)
+                    {
+                        continue;
+                    }
+                    <li class="menu-item depth-1 product menucol-1-3 withimage">
+                        <div class="product-item">
+                            <div class="item-inner">
+                                <div class="product-thumbnail">
+                                    <div class="icon-hot-label hot-right">Hot</div>
+                                    <div class="pr-img-area">
+                                        <a title="@item.SeoPageTitle" href="/product-@item.SeoAlias-@(item.Id).html">
+                                            <figure>
+                                                @{
+                                                    <img class="first-img" src="@images.First().Path" alt="@images.First().Caption">
+                                                    <img class="hover-img" src="@images.Last().Path" alt="@images.Last().Caption">
+                                                }
+                                            </figure>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="item-info">
+                                    <div class="info-inner">
+                                        <div class="item-title"> <a title="@item.SeoPageTitle" href="/product-@item.SeoAlias-@(item.Id).html">@item.Name</a> </div>
+                                        <div class="item-content">
+                                            <div class="item-price">
+                                                <div class="price-box">
+                                                    @{
+                                                        if (item.PromotionPrice.HasValue)
+                                                        {
+                                                            <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> $@item.PromotionPrice.Value </span> </p>
+                                                            <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> $@item.Price </span> </p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="regular-price"><span class="price"> $@item.Price </span></span>
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                }
+            </ul>
+        </li>
+        <li class="mt-root demo_custom_link_cms">
+            <div class="mt-root-item">
+                <a href="/blog.html">
+                    <div class="title title_font"><span class="title-text">Blog</span></div>
+                </a>
+            </div>
+            <ul class="menu-items col-md-3 col-sm-4 col-xs-12" style="top: 28px; left: 402.531px;">
+                @foreach (var item in blogs)
+                {
+                    <li class="menu-item depth-1">
+                        <div class="title"> <a href="/blog-@item.SeoAlias-@(item.Id).html">@item.Name</a></div>
+                    </li>
+                }
+            </ul>
+        </li>
+        <li><a href="#"></a></li>
+    </ul>
+</div>

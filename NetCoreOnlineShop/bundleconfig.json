@@ -1,0 +1,266 @@
+[
+  {
+    "outputFileName": "wwwroot/admin-side/js/custom.min.js",
+    "inputFiles": [
+      "wwwroot/admin-side/js/custom.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/admin-side/css/custom.min.css",
+    "inputFiles": [
+      "wwwroot/admin-side/css/custom.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/user/profile.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/user/profile.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/admin-side/css/adminSide.min.css",
+    "inputFiles": [
+      "wwwroot/admin-side/css/adminSide.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/user/activity.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/user/activity.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/user/appUser.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/user/appUser.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/announcement/announcement.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/announcement/announcement.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/banner/banner.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/banner/banner.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/banner/bannerPage.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/banner/bannerPage.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/banner/page.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/banner/page.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/bill/index.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/bill/index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/blog/appBlog.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/blog/appBlog.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/contact/contact.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/contact/contact.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/feedback/appFeedback.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/feedback/appFeedback.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/footer/footer.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/footer/footer.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/function/appFunction.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/function/appFunction.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/home/home.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/home/home.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/shared/common.min.js",
+    "inputFiles": [
+      "wwwroot/app/shared/common.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/login/index.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/login/index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/newsletter/newsletter.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/newsletter/newsletter.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/page/page.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/page/page.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/product/imageMgt.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/product/imageMgt.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/product/index.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/product/index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/product/priceMgt.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/product/priceMgt.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/product/quantityMgt.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/product/quantityMgt.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/productCategory/index.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/productCategory/index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/report/revenue.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/report/revenue.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/role/appRole.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/role/appRole.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/slide/appSlide.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/slide/appSlide.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/support_ticket/ticket.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/support_ticket/ticket.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/app/controller/wishlist/wishlist.min.js",
+    "inputFiles": [
+      "wwwroot/app/controller/wishlist/wishlist.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/client-side/css/custom/client-side.min.css",
+    "inputFiles": [
+      "wwwroot/client-side/css/custom/client-side.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/client-side/js/controller/account/account.min.js",
+    "inputFiles": [
+      "wwwroot/client-side/js/controller/account/account.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/client-side/js/controller/base/base.min.js",
+    "inputFiles": [
+      "wwwroot/client-side/js/controller/base/base.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/client-side/js/controller/cart/cart.min.js",
+    "inputFiles": [
+      "wwwroot/client-side/js/controller/cart/cart.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/client-side/js/controller/contact/contact.min.js",
+    "inputFiles": [
+      "wwwroot/client-side/js/controller/contact/contact.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/client-side/js/controller/dashboard/dashboard.min.js",
+    "inputFiles": [
+      "wwwroot/client-side/js/controller/dashboard/dashboard.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/client-side/js/controller/dashboard/userInfor.min.js",
+    "inputFiles": [
+      "wwwroot/client-side/js/controller/dashboard/userInfor.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/client-side/js/controller/newsletter/newsletter.min.js",
+    "inputFiles": [
+      "wwwroot/client-side/js/controller/newsletter/newsletter.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/client-side/js/controller/product/product.min.js",
+    "inputFiles": [
+      "wwwroot/client-side/js/controller/product/product.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/client-side/js/controller/product/productDetail.min.js",
+    "inputFiles": [
+      "wwwroot/client-side/js/controller/product/productDetail.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/client-side/js/controller/ticket/ticket.min.js",
+    "inputFiles": [
+      "wwwroot/client-side/js/controller/ticket/ticket.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/client-side/js/controller/checkout/checkout.min.js",
+    "inputFiles": [
+      "wwwroot/client-side/js/controller/checkout/checkout.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/client-side/css/custom/wishlist.min.css",
+    "inputFiles": [
+      "wwwroot/client-side/css/custom/wishlist.css"
+    ]
+  }
+]

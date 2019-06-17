@@ -1,0 +1,194 @@
+﻿@model NetCoreOnlineShop.Models.ShopingCartViewModels.CheckoutViewModel
+@{
+    ViewData["Title"] = "Checkout";
+    var style = "";
+    if (!User.Identity.IsAuthenticated)
+    {
+        style = "display:none";
+    }
+    string fullName = string.Empty;
+    string email = string.Empty;
+    string address = string.Empty;
+    string phone = string.Empty;
+    if (Model.User != null)
+    {
+        fullName = Model.User.FullName == null ? string.Empty : Model.User.FullName;
+        email = Model.User.Email == null ? string.Empty : Model.User.Email;
+        address = Model.User.Address == null ? string.Empty : Model.User.Address;
+        phone = Model.User.PhoneNumber == null ? string.Empty : Model.User.PhoneNumber;
+    }
+}
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/additional-methods.min.js"></script>
+    <script src="~/client-side/js/controller/checkout/checkout.min.js"></script>
+}
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul>
+                    <li class="home"> <a title="Go to Home Page" href="/">Home</a><span>&raquo;</span></li>
+                    <li><strong>Checkout</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumbs End -->
+<!-- Main Container -->
+<section class="main-container col2-right-layout">
+    <div class="main container">
+        <div class="row">
+            <form id="frm-check-out" role="form" method="post">
+                <div class="col-main col-sm-9 col-xs-12">
+                    <div class="page-title">
+                        <h2>Checkout</h2>
+                    </div>
+                    @Html.AntiForgeryToken()
+                    <div class="page-content checkout-page">
+                        <h4 class="checkout-sep">1. Checkout</h4>
+                        <div class="box-border checkout-step1">
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h5>Checkout as a Guest or login account</h5>
+                                        <p>Register with us for future convenience:</p>
+                                        <ul>
+                                            <li>
+                                                <label class="item">
+                                                    <button type="button" class="button check-out-guest"><i class="fa fa-angle-double-right"></i>&nbsp; <span>Continue as Guest</span></button><strong>&nbsp; Or</strong>
+                                                </label>
+                                            </li>
+                                            <li>
+                                                <label>
+                                                    <button type="button" onclick="window.location.href='/login.html'" class="btn btn-light">
+                                                        <i class="fa fa-user"></i>&nbsp;
+                                                        <span>Login your account</span>
+                                                    </button>
+                                                </label>
+                                            </li>
+                                        </ul>
+                                        <br>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h4>Register and save time!</h4>
+                                        <p>Register with us for future convenience:</p>
+                                        <p><i class="fa fa-check-circle text-primary"></i> Fast and easy check out</p>
+                                        <p><i class="fa fa-check-circle text-primary"></i> Easy access to your order history and status</p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <h4 class="checkout-sep">2. Billing Infomations</h4>
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="box-border checkout-step2" style="@style">
+                            <ul>
+                                <li class="row">
+                                    <div class="col-sm-6">
+                                        <label>Full Name</label>
+                                        <input type="text" id="txt-full-name" asp-for="CustomerName" class="input form-control" name="CustomerName" value="@fullName" placeholder="Fullname...">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label>Email Address</label>
+                                        <input type="text" asp-for="CustomerEmail" id="txt-email-address" name="CustomerEmail" class="input form-control" value="@email" placeholder="Email...">
+                                    </div>
+                                </li>
+                                <li class="row">
+                                    <div class="col-xs-6">
+                                        <label>Address</label>
+                                        <input type="text" asp-for="CustomerAddress" id="txt-address" class="input form-control" value="@address" name="CustomerAddress" placeholder="Address...">
+                                    </div>
+                                    <!--/ [col] -->
+                                    <div class="col-xs-6">
+                                        <label>Telephone</label>
+                                        <input class="input form-control" asp-for="CustomerPhone" id="txt-phone" type="text" name="CustomerPhone" value="@phone" placeholder="Phone number...">
+                                    </div>
+                                </li>
+                                <li class="row">
+                                    <div class="col-sm-12">
+                                        <label>Message</label>
+                                        <textarea class="form-control" asp-for="CustomerMessage" id="txt-customer-message" name="CustomerMessage" rows="5" placeholder="Message..."></textarea>
+                                    </div>
+                                </li>
+                                <li>
+                                    <button type="button" class="button btn-step-2"><i class="fa fa-angle-double-right"></i>&nbsp; <span>Continue</span></button>
+                                </li>
+                            </ul>
+                        </div>
+                        <h4 class="checkout-sep">3. Payment Information</h4>
+                        <div class="box-border checkout-step3" style="display:none;">
+                            <ul>
+                                @foreach (var method in Model.PaymentMethods)
+                                {
+                                    <li>
+                                        <label for="radio_button_@method.Value">
+                                            <input asp-for="PaymentMethod" checked="checked" value="@(method.Value)" type="radio" name="PaymentMethod" id="radio_button_@method.Value">
+                                            @method.Name
+                                        </label>
+                                    </li>
+                                }
+                            </ul>
+                            <button type="button" class="button btn-step-3"><i class="fa fa-angle-double-right"></i>&nbsp; <span>Continue</span></button>
+                            <button type="button" class="button pull-right back-step2"><i class="fa fa-angle-double-left"></i>&nbsp; <span>Back step 2</span></button>
+                        </div>
+                        <h4 class="checkout-sep last">4. Order Review</h4>
+                        <div class="box-border checkout-step4" style="display:none;">
+                            <div class="table-responsive">
+                                <table class="table table-bordered cart_summary">
+                                    <thead>
+                                        <tr>
+                                            <th class="cart_product">Product</th>
+                                            <th>Description</th>
+                                            <th class="align-text-table">Unit price</th>
+                                            <th class="align-text-table">Qty</th>
+                                            <th class="align-text-table">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            foreach (var item in Model.BasketDetails)
+                                            {
+                                                <tr>
+                                                    <td class="cart_product">
+                                                        <a href="/product-@item.Product.SeoAlias-@(item.Product.Id).html">
+                                                            <img src="@item.Product.Image" alt="@item.Product.Name">
+                                                        </a>
+                                                    </td>
+                                                    <td class="cart_description">
+                                                        <p class="product-name">
+                                                            <a href="/product-@item.Product.SeoAlias-@(item.Product.Id).html">@item.Product.Name </a>
+                                                        </p>
+                                                        <small><a class="edit-style-row">Color : @item.Color.Name</a></small>
+                                                        <small><a class="edit-style-row">Size : @item.Size.Name</a></small>
+                                                    </td>
+                                                    <td class="price"><span>$@item.Price </span></td>
+                                                    <td class="qty"><input class="form-control input-sm" readonly type="text" value="@item.Quantity"></td>
+                                                    <td class="price"><span>$@(item.Price * item.Quantity) </span></td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2"><strong></strong></td>
+                                            <td class="align-text-table" colspan="1"><strong>Total</strong></td>
+                                            <td colspan="1"><strong></strong></td>
+                                            <td class="align-text-table" colspan="1"><strong>$@Model.TotalBill </strong></td>
+                                            <td colspan="1"><strong></strong></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <button type="submit" class="button pull-right btn-place-order"><span>Place Order</span></button>
+                            <button type="button" class="button pull-left back-step3"><i class="fa fa-angle-double-left"></i>&nbsp; <span>Back step 3</span></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<!-- Main Container End -->
+<partial name="_ServicePartial">

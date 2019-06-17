@@ -1,0 +1,27 @@
+﻿@model List<ProductCategoryViewModel>
+<div id="mobile-menu">
+    <ul>
+        @foreach (var item in Model.Where(x => x.ParentId == null).Take(10))
+        {
+            <li>
+                @{
+                    var childList = Model.Where(x => x.ParentId == item.Id);
+                    if (childList.Count() > 0)
+                    {
+                        <a href="#" class="home1">@item.Name</a>
+                        <ul>
+                            @foreach (var subItem in childList)
+                            {
+                                <li><a href="/category-@subItem.SeoAlias-@(subItem.Id).html"><span>@subItem.Name</span></a></li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <a href="/category-@item.SeoAlias-@(item.Id).html" class="home1">@item.Name</a>
+                    }
+                }
+            </li>
+        }
+    </ul>
+</div>

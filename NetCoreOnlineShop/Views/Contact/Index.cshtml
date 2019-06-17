@@ -1,0 +1,105 @@
+﻿@model NetCoreOnlineShop.Models.ContactViewModels.SendFeedbackViewModel
+@{
+    ViewData["Title"] = "Contact page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var data = "";
+    if (TempData["StatusMessage"] != null)
+    {
+        data = (TempData["StatusMessage"]).ToString();
+    }
+}
+
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/client-side/js/controller/contact/contact.min.js"></script>
+}
+<!-- Breadcrumbs -->
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul>
+                    <li class="home"> <a title="Go to Home Page" href="/">Home</a><span>&raquo;</span></li>
+                    <li><strong>Contact Us</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumbs End -->
+<!-- Main Container -->
+<section class="main-container col1-layout">
+    <div class="main container">
+        <div class="row">
+            <section class="col-main col-sm-12">
+                <div id="contact" class="page-content page-contact">
+                    <div class="page-title">
+                        <h2>Contact Us</h2>
+                    </div>
+                    <div id="message-box-conact">We're available for new projects</div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6" id="contact_form_map">
+                            <h3 class="page-subheading">Let's get in touch</h3>
+                            <p>@Model.Contact.Other</p>
+                            <br />
+                            <ul>
+                                <li><i class="fa fa-circle"></i> Praesent nec tincidunt turpis.</li>
+                                <li><i class="fa fa-circle"></i> Aliquam et nisi risus.&nbsp;Cras ut varius ante.</li>
+                                <li><i class="fa fa-circle"></i> Ut congue gravida dolor, vitae viverra dolor.</li>
+                            </ul>
+                            <br />
+                            <ul class="store_info">
+                                <li><i class="fa fa-home"></i>@Model.Contact.Address</li>
+                                <li><i class="fa fa-edge"></i>@Model.Contact.Name - <a href="@Model.Contact.Website" style="color:dodgerblue">@Model.Contact.Website</a></li>
+                                <li><i class="fa fa-phone"></i><span>@Model.Contact.Phone</span></li>
+                                <li><i class="fa fa-envelope"></i>Email: <span><a href="mailto:@Model.Contact.Email">@Model.Contact.Email</a></span></li>
+                            </ul>
+
+                            @if (data == "Success")
+                            {
+                                <br />
+                                <br />
+                                <br />
+                                <div>
+                                    <span class="received-email">
+                                        ***We have received your email, we aim to respond within 2 working days.
+                                    </span>
+                                </div>
+                            }
+                        </div>
+                        <form role="form" method="post" id="frm-feedback">
+                            @Html.AntiForgeryToken()
+                            <div class="col-sm-6">
+                                <h3 class="page-subheading">Make an enquiry</h3>
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                                <div class="contact-form-box">
+                                    <div class="form-selector">
+                                        <label>*Name</label>
+                                        <input asp-for="Feedback.Name" name="Name" type="text" class="form-control input-sm" id="name" />
+                                    </div>
+                                    <div class="form-selector">
+                                        <label>*Email</label>
+                                        <input asp-for="Feedback.Email" name="Email" type="text" class="form-control input-sm" id="email" />
+                                    </div>
+                                    <div class="form-selector">
+                                        <label>Address</label>
+                                        <input type="text" asp-for="Feedback.Address" name="Address" class="form-control input-sm" id="address" />
+                                    </div>
+                                    <div class="form-selector">
+                                        <label>*Message</label>
+                                        <textarea asp-for="Feedback.Message" name="Message" class="form-control input-sm" rows="10" id="message"></textarea>
+                                    </div>
+                                    <div class="form-selector">
+                                        <button class="button" type="submit" id="btn-send-feedback"><i class="icon-paper-plane icons"></i>&nbsp; <span>Send Message</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<!-- Main Container End -->
+<partial name="_ServicePartial">

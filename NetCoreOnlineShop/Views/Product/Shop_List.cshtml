@@ -1,0 +1,359 @@
+﻿@model NetCoreOnlineShop.Models.ProductViewModels.ListViewModel
+@using NetCoreOnlineShop.Models.ShopingCartViewModels;
+@using Microsoft.AspNetCore.Http.Extensions;
+@{
+    ViewData["Title"] = Model.ProductCategory.Name;
+    ViewData["Keyword"] = Model.ProductCategory.SeoKeywords;
+    ViewData["Description"] = Model.ProductCategory.SeoDescription;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var parentCategories = Model.AllCategories.Where(x => x.ParentId == null);
+    var specialProducts = Model.Data.Results.Where(x => x.PromotionPrice != null).Take(3);
+    var priceSort = TempData["PriceSort"];
+
+    var cart = new List<CartViewModel>();
+    var totalItems = Model.CartViewModels == null ? 0 : Model.CartViewModels.Count;
+    decimal totalCost = 0;
+    if (Model.CartViewModels != null && Model.CartViewModels.Count() > 0)
+    {
+        foreach (var product in Model.CartViewModels)
+        {
+            totalCost += product.Price * product.Quantity;
+        }
+        cart = Model.CartViewModels.Take(2).ToList();
+    }
+}
+
+<!-- Breadcrumbs -->
+@section Scripts{
+    <script src="~/client-side/js/controller/product/product.min.js"></script>
+}
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul>
+                    <li class="home"> <a title="Go to Home Page" href="/">Home</a><span>&raquo;</span></li>
+                    <li><strong>@Model.ProductCategory.Name</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumbs End -->
+<!-- Main Container -->
+<div class="main-container col2-left-layout">
+    <div class="container">
+        <div class="row">
+            <div class="col-main col-sm-9 col-xs-12 col-sm-push-3">
+                <div class="category-description std">
+                    <div class="slider-items-products">
+                        <div id="category-desc-slider" class="product-flexslider hidden-buttons">
+                            <div class="slider-items slider-width-col1 owl-carousel owl-theme">
+                                <!-- Item -->
+                                <div class="item">
+                                    <a>
+                                        <img alt="@Model.ProductCategory.Name" src="@Model.ProductCategory.Image">
+                                    </a>
+                                </div>
+                                <!-- End Item -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="shop-inner">
+                    <div class="page-title">
+                        <h2>@Model.ProductCategory.Name</h2>
+                    </div>
+                    <div class="toolbar">
+                        <div class="view-mode">
+                            <ul>
+                                @{
+                                    var url = Context.Request.GetDisplayUrl();
+                                    if (!url.Contains("shop_list"))
+                                    {
+                                        <li class="active">
+                                            <a asp-action="Catalog_Grid" asp-controller="Product"> <i class="fa fa-th-large"></i></a>
+                                        </li>
+                                        <li> <a asp-action="Shop_List" asp-controller="Product"> <i class="fa fa-th-list"></i> </a> </li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <a asp-action="Catalog_Grid" asp-controller="Product"> <i class="fa fa-th-large"></i></a>
+                                        </li>
+                                        <li class="active">
+                                            <a asp-action="Shop_List" asp-controller="Product"><i class="fa fa-th-list"></i></a>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                        <form asp-action="Shop_List" asp-controller="Product" method="get">
+                            <input type="hidden" name="priceRange" value="@priceSort" />
+                            <div class="sorter">
+                                <div class="short-by">
+                                    <label>Sort By:</label>
+                                    <select name="sortBy" asp-for="SortType" onchange="this.form.submit()" asp-items="Model.SortTypes"></select>
+                                </div>
+                                <div class="short-by page">
+                                    <label>Show:</label>
+                                    <select name="pageSize" asp-for="PageSize" onchange="this.form.submit()" asp-items="Model.PageSizes"></select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="product-list-area">
+                        <ul class="products-list" id="products-list">
+                            @foreach (var product in Model.Data.Results)
+                            {
+                                <li class="item ">
+                                    <div class="product-img">
+                                        @{
+                                            if (product.PromotionPrice != null)
+                                            {
+                                                <div class="icon-sale-label sale-left">Sale</div>
+                                            }
+                                            if (DateTime.Now.Month == product.CreatedDate.Month)
+                                            {
+                                                <div class="icon-new-label new-right">New</div>
+                                            }
+                                            if (product.HotFlag == Status.Active)
+                                            {
+                                                <div class="icon-hot-label hot-right">Hot</div>
+                                            }
+                                        }
+                                        <a href="/product-@product.SeoAlias-@(product.Id).html" title="@product.Name">
+                                            <figure>
+                                                <img class="small-image" src="@product.Image" alt="@product.Name">
+                                            </figure>
+                                        </a>
+                                    </div>
+                                    <div class="product-shop">
+                                        <h2 class="product-name"><a href="/product-@product.SeoAlias-@(product.Id).html" title="@product.Name">@product.Name</a></h2>
+                                        <div class="ratings">
+                                            <p class="calendar"><span class="date"><i class="pe-7s-date"></i>&nbsp;@product.CreatedDate.ToString("dd MMM yyyy")</span></p>
+                                        </div>
+                                        <div class="price-box">
+                                            @if (product.PromotionPrice.HasValue)
+                                            {
+                                                <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> $@product.PromotionPrice.Value </span> </p>
+                                                <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> $@product.Price </span> </p>
+                                            }
+                                            else
+                                            {
+                                                <span class="regular-price"><span class="price"> $@product.Price </span></span>
+                                            }
+                                        </div>
+                                        <div class="desc std">
+                                            <p>
+                                                @Html.Raw(product.Content.Substring(0, 250))<a class="link-learn" title="Learn More" href="/product-@product.SeoAlias-@(product.Id).html">Learn More</a>
+                                            </p>
+                                        </div>
+                                        <div class="actions">
+                                            <button class="button cart-button" title="See details" onclick="window.location.href='/product-@product.SeoAlias-@(product.Id).html'" type="button"><i class="fa fa-info-circle"></i><span>See details</span></button>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    @await Component.InvokeAsync("Pager", Model.Data);
+                </div>
+            </div>
+            <aside class="sidebar col-sm-3 col-xs-12 col-sm-pull-9">
+                <div class="block shop-by-side">
+                    <div class="sidebar-bar-title">
+                        <h3>Shop By</h3>
+                    </div>
+                    <div class="block-content">
+                        <p class="block-subtitle">@Model.ProductCategory.Name</p>
+                        <div class="layered-Category">
+                            <h2 class="saider-bar-title">Categories</h2>
+                            <div class="layered-content">
+                                <ul class="check-box-list">
+                                    @foreach (var item in parentCategories)
+                                    {
+                                        var chilCategories = Model.AllCategories.Count(x => x.ParentId == item.Id);
+                                        <li>
+                                            <a href="/category-@item.SeoAlias-@(item.Id).html"><i class="fa fa-angle-right"></i>&nbsp; @(item.Name + "(" + chilCategories + ")")</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="block product-price-range ">
+                    <div class="sidebar-bar-title">
+                        <h3>Price</h3>
+                    </div>
+                    <form asp-action="Shop_List" asp-controller="Product" method="get" id="frm-price-short">
+                        <div class="block-content">
+                            <div class="slider-range">
+                                <ul class="check-box-list">
+                                    @if (Model.PriceSort != null)
+                                    {
+                                        foreach (var item in Model.PriceSorts)
+                                        {
+                                            if (Model.PriceSort == $"{item.Value1}-{item.Value2}")
+                                            {
+                                                priceSort = $"{item.Value1}-{item.Value2}";
+                                                <li>
+                                                    <input name="priceRange" asp-for="IsSorted" type="checkbox" id="p@(Model.PriceSorts.IndexOf(item))" onclick="this.form.submit()" value="@priceSort" />
+                                                    <label for="p@(Model.PriceSorts.IndexOf(item))"> <span class="button"></span>@item.Name</label>
+                                                </li>
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        foreach (var item in Model.PriceSorts)
+                                        {
+                                            <li>
+                                                <input name="priceRange" type="checkbox" id="p@(Model.PriceSorts.IndexOf(item))" onclick="this.form.submit()" value="@item.Value1-@item.Value2" />
+                                                <label for="p@(Model.PriceSorts.IndexOf(item))"> <span class="button"></span>@item.Name</label>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="block sidebar-cart">
+                    <div class="sidebar-bar-title">
+                        <h3>My Cart</h3>
+                    </div>
+                    @{
+                        <div class="block-content">
+                            <p class="amount">There are <a href="/my-cart.html">@totalItems items</a> in your cart.</p>
+                            @if (cart.Count > 0)
+                            {
+                                <ul>
+                                    @foreach (var item in cart)
+                                    {
+                                        var classStyle = cart.IndexOf(item) == 1 ? "item" : "item last";
+                                        <li class="@classStyle">
+                                            <a href="/product-@item.Product.SeoAlias-@(item.Product.Id).html" title="@item.Product.Name" class="product-image"><img src="@item.Product.Image" alt="@item.Product.Name"></a>
+                                            <div class="product-details">
+                                                <p class="product-name"> <a href="/product-@item.Product.SeoAlias-@(item.Product.Id).html">@item.Product.Name</a> </p>
+                                                <strong>@item.Quantity</strong> x <span class="price">$@item.Price</span>
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
+                                <div class="summary">
+                                    <p class="subtotal"> <span class="label">Cart Subtotal:</span> <span class="price">$@totalCost</span> </p>
+                                </div>
+                                <div class="cart-checkout">
+                                    <button class="button button-checkout" onclick="window.location.href='/checkout.html'" title="Checkout" type="submit"><span>Checkout</span></button>
+                                    <button class="button button-checkout" onclick="window.location.href='/my-cart.html'" title="View cart" type="submit"><span>View All</span></button>
+                                </div>
+                            }
+                            else
+                            {
+                                <button class="button button-checkout" onclick="window.location.href='/my-cart.html'" title="View cart" type="submit"><span>View Cart</span></button>
+                            }
+                        </div>
+                    }
+                </div>
+                <div class="single-img-add sidebar-add-slider ">
+                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        </ol>
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner" role="listbox">
+                            <div class="item active">
+                                @if (Model.AdvertisementViewModels != null && Model.AdvertisementViewModels.Count > 0)
+                                {
+                                    <a href="@Model.AdvertisementViewModels.First().Url">
+                                        <img src="@Model.AdvertisementViewModels.First().Image" alt="@Model.AdvertisementViewModels.First().Name">
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a>
+                                        <img src="/client-side/images/add-slide3.jpg" alt="Contact shopper for advertisement">
+                                    </a>
+                                }
+                                <div class="carousel-caption">
+                                    <h3><a href="single_product.html" title=" Sample Product">Sale Up to 50% off</a></h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                    <a href="#" class="info">shopping Now</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a> <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span> </a>
+                    </div>
+                </div>
+                <div class="block special-product">
+                    <div class="sidebar-bar-title">
+                        <h3>Special Products</h3>
+                    </div>
+                    <div class="block-content">
+                        <ul>
+                            @foreach (var product in specialProducts)
+                            {
+                                <li class="item">
+                                    <div class="products-block-left">
+                                        <a href="/product-@product.SeoAlias-@(product.Id).html" title="@product.Name" class="product-image">
+                                            <img src="@product.Image" alt="@product.Name">
+                                        </a>
+                                    </div>
+                                    <div class="products-block-right">
+                                        <p class="product-name"> <a href="/product-@product.SeoAlias-@(product.Id).html">@product.Name</a> </p>
+                                        <span class="price">$@product.PromotionPrice</span>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                        <a class="link-all" href="shop_grid.html">All Products</a>
+                    </div>
+                </div>
+                <div class="block popular-tags-area ">
+                    <div class="sidebar-bar-title">
+                        <h3>Popular Tags</h3>
+                    </div>
+                    <div class="tag">
+                        <ul>
+                            @foreach (var tag in Model.ProductTags)
+                            {
+                                <li><a href="products-by-tag-@(tag.Id).html">@tag.Name</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="block special-product">
+                    <div class="sidebar-bar-title">
+                        <h3>Latest Blogs</h3>
+                    </div>
+                    <div class="block-content">
+                        <ul>
+                            @foreach (var blog in Model.Blogs)
+                            {
+                                <li class="item">
+                                    <div class="products-block-left">
+                                        <a href="/blog-@blog.SeoAlias-@(blog.Id).html" title="@blog.Name" class="product-image">
+                                            <img src="@blog.Thumbnail" alt="@blog.Name ">
+                                        </a>
+                                    </div>
+                                    <div class="products-block-right">
+                                        <p class="product-name"> <a href="/blog-@blog.SeoAlias-@(blog.Id).html">@blog.Name</a> </p>
+                                        <span class="date"> <i class="pe-7s-date">&nbsp;</i>@blog.CreatedDate.ToShortDateString()</span>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                        <a class="link-all" href="/blog.html">All Blogs</a>
+                    </div>
+                </div>
+                @*<div class="offer-banner"><img src="@Model.ProductCategory.Image" alt="@Model.ProductCategory.Name"></div>*@
+            </aside>
+        </div>
+    </div>
+</div>
+<!-- Main Container End -->
+<partial name="_ServicePartial">

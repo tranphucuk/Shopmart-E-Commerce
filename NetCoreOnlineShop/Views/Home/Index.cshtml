@@ -1,0 +1,496 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = Model.SeoTitle;
+    ViewData["Keyword"] = Model.MetaKeyword;
+    ViewData["Description"] = Model.MetaDescription;
+    var bestCategorySelling = Model.ProductCategoryViewModels.Where(x => x.HomeFlag == Status.Active && x.ParentId != null).Take(4).ToArray();
+    var specialProducts = Model.ProductViewModels.Where(x => x.PromotionPrice != null).Take(10);
+    var mostViewProducts = Model.ProductViewModels.OrderByDescending(x => x.ViewCount).Take(2);
+    var newProducts = Model.ProductViewModels.OrderByDescending(x => x.CreatedDate).Take(2);
+    var blogs = Model.BlogViewModels.OrderByDescending(x => x.CreatedDate);
+}
+@section Scripts{
+    <script src="~/client-side/js/controller/home/home.js"></script>
+}
+<!-- Slideshow  -->
+<div class="main-slider" id="home">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-12 banner-left hidden-xs"><img src="/client-side/images/banner-left.jpg" alt="banner"></div>
+            <div class="col-sm-9 col-md-9 col-lg-9 col-xs-12 jtv-slideshow">
+                <div id="jtv-slideshow">
+                    <div id='rev_slider_4_wrapper' class='rev_slider_wrapper fullwidthbanner-container'>
+                        <div id='rev_slider_4' class='rev_slider fullwidthabanner'>
+                            <ul>
+                                @{
+                                    foreach (var item in Model.SlideViewModels)
+                                    {
+                                        <li data-transition='fade' data-slotamount='7' data-masterspeed='1000' data-thumb=''>
+                                            <a href="@item.Url">
+                                                <img src='@item.Image' data-bgposition='left top' data-bgfit='cover' data-bgrepeat='no-repeat' alt="@item.Name" />
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                            <div class="tp-bannertimer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="inner-box">
+    <div class="container">
+        <div class="row">
+            <!--Service section-->
+            @await Component.InvokeAsync("Service")
+            <!-- Banner -->
+            <div class="col-md-3 top-banner hidden-sm">
+                <div class="jtv-banner3">
+                    <div class="jtv-banner3-inner">
+                        @if (Model.AdvertisementViewModels != null && Model.AdvertisementViewModels.Count > 0)
+                        {
+                            <a href="@Model.AdvertisementViewModels.First().Url">
+                                <img src="@Model.AdvertisementViewModels.First().Image" alt="@Model.AdvertisementViewModels.First().Name">
+                            </a>
+
+                        }
+                        else
+                        {
+                            <a>
+                                <img src="/client-side/images/ads.jpg" alt="Contact shopper for advertisement">
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- Best Sale -->
+            <div class="col-sm-12 col-md-9 jtv-best-sale special-pro">
+                <div class="jtv-best-sale-list">
+                    <div class="wpb_wrapper">
+                        <div class="best-title text-left">
+                            <h2>Special Offers</h2>
+                        </div>
+                    </div>
+                    <div class="slider-items-products">
+                        <div id="jtv-best-sale-slider" class="product-flexslider">
+                            <div class="slider-items">
+                                @{
+                                    foreach (var speicalProduct in specialProducts)
+                                    {
+                                        var productImages = speicalProduct.ProductImages.Take(2);
+                                        if (productImages.Count() < 2)
+                                        {
+                                            continue;
+                                        }
+                                        <div class="product-item">
+                                            <div class="item-inner">
+                                                <div class="product-thumbnail">
+                                                    <div class="icon-sale-label sale-left">Sale</div>
+                                                    <div class="pr-img-area">
+                                                        <a title="@speicalProduct.SeoKeywords" href="/product-@speicalProduct.SeoAlias-@(speicalProduct.Id).html">
+                                                            @{
+                                                                <figure>
+                                                                    <img class="first-img" src="@productImages.First().Path" alt="@productImages.First().Caption">
+                                                                    <img class="hover-img" src="@productImages.Last().Path" alt="@productImages.Last().Caption">
+                                                                </figure>
+                                                            }
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="info-inner">
+                                                        <div class="item-title"> <a title="@speicalProduct.SeoKeywords" href="single_product.html">@speicalProduct.Name</a> </div>
+                                                        <div class="item-content">
+                                                            <div class="item-price">
+                                                                <div class="price-box">
+                                                                    @{
+                                                                        if (speicalProduct.PromotionPrice.HasValue)
+                                                                        {
+                                                                            <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> $@speicalProduct.PromotionPrice.Value </span> </p>
+                                                                            <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> $@speicalProduct.Price </span> </p>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span class="regular-price"><span class="price"> $@speicalProduct.Price </span></span>
+                                                                        }
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                            <div class="pro-action">
+                                                                <button type="button" class="add-to-cart quick-view-product" data-id="@speicalProduct.Id"><span> Quick Look</span> </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- All products-->
+<div class="container">
+    <div class="home-tab">
+        <div class="tab-title text-left">
+            <h2>Best selling</h2>
+            <ul class="nav home-nav-tabs home-product-tabs">
+                @{
+                    for (int i = 0; i < bestCategorySelling.Length; i++)
+                    {
+                        var item = bestCategorySelling[i];
+                        if (i == 0)
+                        {
+                            <li class="active"><a href="#@item.SeoAlias" data-toggle="tab" aria-expanded="false">@item.Name</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="#@item.SeoAlias" data-toggle="tab" aria-expanded="false">@item.Name</a></li>
+                        }
+                    }
+                }
+            </ul>
+        </div>
+        <div id="productTabContent" class="tab-content">
+            @{
+                var css = string.Empty;
+                for (int i = 0; i < bestCategorySelling.Length; i++)
+                {
+                    if (i == 0)
+                    {
+                        css = "tab-pane active in";
+                    }
+                    else
+                    {
+                        css = "tab-pane fade";
+                    }
+                    <div class="@css" id="@bestCategorySelling[i].SeoAlias">
+                        <div class="featured-pro">
+                            <div class="slider-items-products">
+                                <div id="computer-slider" class="product-flexslider hidden-buttons">
+                                    <div class="slider-items slider-width-col4">
+                                        @{
+                                            var productsByCategory = Model.ProductViewModels.Where(x => x.HotFlag == Status.Active && x.CategoryId == bestCategorySelling[i].Id);
+                                            foreach (var hotProduct in productsByCategory)
+                                            {
+                                                var productImages = hotProduct.ProductImages.Take(2);
+                                                if (productImages.Count() < 2)
+                                                {
+                                                    continue;
+                                                }
+                                                <div class="product-item">
+                                                    <div class="item-inner">
+                                                        <div class="product-thumbnail">
+                                                            <div class="icon-hot-label new-left">Hot</div>
+                                                            <div class="pr-img-area">
+                                                                <a title="@hotProduct.SeoKeywords" href="/product-@hotProduct.SeoAlias-@(hotProduct.Id).html">
+                                                                    @{
+                                                                        <figure>
+                                                                            <img class="first-img" src="@productImages.First().Path" alt="@productImages.First().Caption">
+                                                                            <img class="hover-img" src="@productImages.Last().Path" alt="@productImages.Last().Caption">
+                                                                        </figure>
+                                                                    }
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="item-info">
+                                                            <div class="info-inner">
+                                                                <div class="item-title"> <a title="@hotProduct.SeoKeywords" href="/product-@hotProduct.SeoAlias-@(hotProduct.Id).html">@hotProduct.Name</a> </div>
+                                                                <div class="item-content">
+                                                                    <div class="item-price">
+                                                                        <div class="price-box">
+                                                                            @{
+                                                                                if (hotProduct.PromotionPrice.HasValue)
+                                                                                {
+                                                                                    <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> $@hotProduct.PromotionPrice.Value </span> </p>
+                                                                                    <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> $@hotProduct.Price </span> </p>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <span class="regular-price"><span class="price"> $@hotProduct.Price </span></span>
+                                                                                }
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="pro-action">
+                                                                        <button type="button" data-id="@hotProduct.Id" class="add-to-cart quick-view-product"><span> Quick Look</span> </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+<div class="featured-products">
+    <div class="container">
+        <div class="row">
+            <!-- Best Sale -->
+            <div class="col-sm-12 col-md-4 jtv-best-sale">
+                <div class="jtv-best-sale-list">
+                    <div class="wpb_wrapper">
+                        <div class="best-title text-left">
+                            <h2>Most View</h2>
+                        </div>
+                    </div>
+                    <div class="slider-items-products">
+                        <div id="toprate-products-slider" class="product-flexslider">
+                            <div class="slider-items">
+                                <ul class="products-grid">
+                                    @{
+                                        foreach (var productTopView in mostViewProducts)
+                                        {
+                                            var productImages = productTopView.ProductImages.Take(1);
+                                            if (productImages.Count() < 1)
+                                            {
+                                                continue;
+                                            }
+                                            <li class="item">
+                                                <div class="item-inner">
+                                                    <div class="item-img">
+                                                        <a class="product-image" title="@productTopView.SeoKeywords" href="/product-@productTopView.SeoAlias-@(productTopView.Id).html">
+                                                            @{
+                                                                <img alt="@productImages.First().Caption" src="@productImages.First().Path">
+                                                            }
+                                                        </a>
+                                                    </div>
+                                                    <div class="item-info">
+                                                        <div class="info-inner">
+                                                            <div class="item-title"> <a title="@productTopView.SeoKeywords" href="/product-@productTopView.SeoAlias-@(productTopView.Id).html">@productTopView.Name</a> </div>
+                                                            <div class="item-price">
+                                                                <div class="price-box">
+                                                                    @{
+                                                                        if (productTopView.PromotionPrice.HasValue)
+                                                                        {
+                                                                            <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> $@productTopView.PromotionPrice.Value </span> </p>
+                                                                            <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> $@productTopView.Price </span> </p>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span class="regular-price"><span class="price"> $@productTopView.Price </span></span>
+                                                                        }
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                            <div class="pro-action">
+                                                                <button type="button" data-id="@productTopView.Id" class="add-to-cart quick-view-product"><i class="fa fa-search"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Banner -->
+            <div class="col-md-4 top-banner hidden-sm">
+                <div class="jtv-banner3">
+                    <div class="jtv-banner3-inner">
+                        @if (Model.AdvertisementViewModels != null && Model.AdvertisementViewModels.Count > 0)
+                        {
+                            <a href="@Model.AdvertisementViewModels.First().Url">
+                                <img src="@Model.AdvertisementViewModels.Last().Image" alt="@Model.AdvertisementViewModels.Last().Name">
+                            </a>
+
+                        }
+                        else
+                        {
+                            <a>
+                                <img src="/client-side/images/ads.jpg" alt="Contact shopper for advertisement">
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-4 jtv-best-sale">
+                <div class="jtv-best-sale-list">
+                    <div class="wpb_wrapper">
+                        <div class="best-title text-left">
+                            <h2>New products</h2>
+                        </div>
+                    </div>
+                    <div class="slider-items-products">
+                        <div id="new-products-slider" class="product-flexslider">
+                            <div class="slider-items">
+                                <ul class="products-grid">
+                                    @{
+                                        foreach (var newProduct in newProducts)
+                                        {
+                                            var productImages = newProduct.ProductImages.Take(1);
+                                            if (productImages.Count() < 1)
+                                            {
+                                                continue;
+                                            }
+                                            <li class="item">
+                                                <div class="item-inner">
+                                                    <div class="item-img">
+                                                        <a class="product-image" title="@newProduct.SeoPageTitle" href="/product-@newProduct.SeoAlias-@(newProduct.Id).html">
+                                                            @{
+                                                                <img alt="@productImages.First().Caption" src="@productImages.First().Path">
+                                                            }
+                                                        </a>
+                                                    </div>
+                                                    <div class="item-info">
+                                                        <div class="info-inner">
+                                                            <div class="item-title"> <a title="@newProduct.SeoPageTitle" href="/product-@newProduct.SeoAlias-@(newProduct.Id).html">@newProduct.Name</a> </div>
+                                                            <div class="item-price">
+                                                                <div class="price-box">
+                                                                    @{
+                                                                        if (newProduct.PromotionPrice.HasValue)
+                                                                        {
+                                                                            <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> $@newProduct.PromotionPrice.Value </span> </p>
+                                                                            <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> $@newProduct.Price </span> </p>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span class="regular-price"><span class="price"> $@newProduct.Price </span></span>
+                                                                        }
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                            <div class="pro-action">
+                                                                <button type="button" data-id="@newProduct.Id" class="add-to-cart quick-view-product"><i class="fa fa-search"></i></button>
+                                                            </div>
+                                                            @*<div class="pr-button-hover">
+                                                                    <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart-o"></i> </a> </div>
+                                                                </div>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Blog -->
+<section class="blog-post-wrapper">
+    <div class="container">
+        <div class="best-title text-left">
+            <h2>Our Latest News</h2>
+        </div>
+        <div class="slider-items-products">
+            <div id="latest-news-slider" class="product-flexslider hidden-buttons">
+                <div class="slider-items slider-width-col6">
+                    @{
+                        foreach (var blog in blogs)
+                        {
+                            <div class="item">
+                                <div class="blog-box">
+                                    <a href="/blog-@blog.SeoAlias-@(blog.Id).html"> <img class="primary-img" src="@blog.Thumbnail" alt="@blog.Name"></a>
+                                    <div class="blog-btm-desc">
+                                        <div class="blog-top-desc">
+                                            <div class="blog-date">@blog.CreatedDate.ToString("dd MMM yyyy").ToString()</div>
+                                            <h4><a href="/blog-@blog.SeoAlias-@(blog.Id).html">@blog.Name.Substring(0, 20)</a></h4>
+                                            <div class="jtv-entry-meta"> <i class="fa fa-user-o"></i> <strong>@User.Identity.Name</strong></div>
+                                        </div>
+                                        <p>@blog.Description.Substring(0, 100)</p>
+                                        <a class="read-more" href="/blog-@blog.SeoAlias-@(blog.Id).html"> Read More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- our clients Slider -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-xs-12">
+            <div class="our-clients">
+                <div class="slider-items-products">
+                    <div id="our-clients-slider" class="product-flexslider hidden-buttons">
+                        <div class="slider-items slider-width-col6">
+                            <div class="item"><a><img src="/client-side/images/brand1.png" alt="Image"></a> </div>
+                            <div class="item"><a><img src="/client-side/images/brand2.png" alt="Image"></a> </div>
+                            <div class="item"><a><img src="/client-side/images/brand3.png" alt="Image"></a> </div>
+                            <div class="item"><a><img src="/client-side/images/brand4.png" alt="Image"></a> </div>
+                            <div class="item"><a><img src="/client-side/images/brand5.png" alt="Image"></a> </div>
+                            <div class="item"><a><img src="/client-side/images/brand6.png" alt="Image"></a> </div>
+                            <div class="item"><a><img src="/client-side/images/brand7.png" alt="Image"></a> </div>
+                            <div class="item"><a><img src="/client-side/images/brand8.png" alt="Image"></a> </div>
+                            <div class="item"><a><img src="/client-side/images/brand9.png" alt="Image"></a> </div>
+                            <div class="item"><a><img src="/client-side/images/brand10.png" alt="Image"></a> </div>
+                            <div class="item"><a><img src="/client-side/images/brand11.png" alt="Image"></a> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Newsletter - Customers Box -->
+<div class="footer-newsletter">
+    <div class="container">
+        <div class="row">
+            <!-- Newsletter -->
+            <div class="col-md-6 col-sm-6">
+                <form id="newsletter"></form>
+                <h3>Join Our Newsletter</h3>
+                <div class="title-divider"><span></span></div>
+                <p class="sub-title text-center">Get 25% off</p>
+                <div class="newsletter-inner">
+                    <input class="newsletter-email" id="txt-email-sub" name='Email' placeholder='Enter Your Email' />
+                    <button class="button subscribe" id="btn-subscribe" title="Subscribe">Subscribe</button>
+                </div>
+            </div>
+            <!-- Customers Box -->
+            <div class="col-sm-6 col-xs-12 testimonials">
+                <div class="page-header">
+                    <h2>What Our Customers Say</h2>
+                </div>
+                <div class="slider-items-products">
+                    <div id="testimonials-slider" class="product-flexslider hidden-buttons home-testimonials">
+                        <div class="slider-items slider-width-col4 ">
+                            @{
+                                foreach (var feedback in Model.FeedbackViewModels)
+                                {
+                                    <div class="holder">
+                                        <blockquote>
+                                            @feedback.Message.Substring(0, 240)
+                                        </blockquote>
+                                        <div class="thumb"> <img src="/client-side/images/avatar.png" alt="feedback"> </div>
+                                        <div class="holder-info"> <strong class="name">@feedback.Name</strong> <strong class="designation">@feedback.Email</strong></div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

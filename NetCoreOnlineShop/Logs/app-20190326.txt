@@ -1,0 +1,2 @@
+2019-03-26T22:55:26.3294217+00:00 0HLLI7KL269V9:00000008 [WRN] Query: '"(from Slide dtoSlide in DbSet<Slide> select new SlideViewModel{ { 
+    CreatedDate = [dtoSlide].Cre..."' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results. (32148ccc)

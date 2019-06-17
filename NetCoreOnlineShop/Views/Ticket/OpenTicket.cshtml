@@ -1,0 +1,114 @@
+﻿@model NetCoreOnlineShop.Models.SupportTicketModels.TicketInfo
+@using Microsoft.AspNetCore.Http.Extensions
+@using NetcoreOnlineShop.Utilities.Constants
+@{
+    ViewData["Keyword"] = "Open Ticket";
+    ViewData["Description"] = "Open Ticket";
+    ViewData["Title"] = "Open Ticket";
+
+    var listLinks = CommonConstants.listLinks;
+}
+
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/src/jquery.validate.unobtrusive.js"></script>
+    <script src="~/client-side/js/controller/ticket/ticket.min.js"></script>
+}
+<!-- Breadcrumbs -->
+
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul>
+                    <li class="home"> <a title="Go to Home Page" href="/">Home</a><span>&raquo;</span></li>
+                    <li><strong>Support Ticket</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumbs End -->
+<!-- Main Container -->
+<section class="main-container col2-right-layout">
+    <div class="main container">
+        <div class="row">
+            <div class="col-main col-sm-9 col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12" id="contact_form_map">
+                        <div class="page-title">
+                            <h2>Open a ticket</h2>
+                        </div>
+                        <p>
+                            Lorem ipsum dolor sit amet onsectetuer adipiscing elit.
+                            Mauris fermentum dictum magna. Sed laoreet aliquam leo. Ut tellus dolor dapibus eget.
+                            Mauris tincidunt aliquam lectus sed vestibulum. Vestibulum bibendum suscipit mattis.
+                        </p>
+                    </div>
+                    <form role="form" method="post" id="frm-ticket">
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="contact-form-box">
+                            <div class="form-selector col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                                <label>*Email</label>
+                                <input name="Email" asp-for="Ticket.Email" type="text" class="form-control input-sm" id="Email" placeholder="Email..." />
+                            </div>
+                            <div class="form-selector col-sm-12 col-xs-12 col-md-6 col-lg-6">
+                                <label>*Bill number</label>
+                                <select class="form-control" name="BillId" asp-for="Ticket.BillId" style="height:30px">
+                                    @foreach (var billId in Model.BillIds)
+                                    {
+                                        <option value="@billId">#@billId</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-selector col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                                <label>Title</label>
+                                <input type="text" asp-for="Ticket.Title" name="Title" placeholder="Title..." class="form-control input-sm" id="title" />
+                            </div>
+                            <div class="form-selector col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                                <label>*Message</label>
+                                <textarea name="Content" asp-for="Ticket.Content" placeholder="Message..." class="form-control input-sm" rows="13" id="content"></textarea>
+                            </div>
+                            <div class="form-selector col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                                <br />
+                                <button class="button" type="submit" id="btn-send-ticket"><i class="icon-paper-plane icons"></i>&nbsp; <span>Send Ticket</span></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <aside class="right sidebar col-sm-3 col-xs-12">
+                <div class="sidebar-account block">
+                    <div class="sidebar-bar-title">
+                        <h3>My Account</h3>
+                    </div>
+                    <div class="block-content">
+                        @{
+                            var url = @Context.Request.GetDisplayUrl();
+                        }
+                        <ul>
+                            @foreach (var item in listLinks)
+                            {
+                                if (url.Contains(item.Url))
+                                {
+                                    <li class="current"><a href="@item.Url">@item.Name</a></li>
+                                }
+                                else if (listLinks.Last() == item)
+                                {
+                                    <li class="last"><a href="@item.Url">@item.Name</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="@item.Url">@item.Name</a></li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+                @await Component.InvokeAsync("RightSideBar")
+            </aside>
+        </div>
+    </div>
+</section>
+<partial name="_ServicePartial">
